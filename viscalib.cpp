@@ -140,3 +140,101 @@ void ViscaLib::PAN_TILT_RELATIVE_POSITION(byte speed, int panPosition, int tiltP
 
   sendList(list, sizeof(list) / sizeof(list[0]));
 }
+
+void ViscaLib::ZOOM_TELE_STANDARD(){
+  byte list[4] = {0x01, 0x04, 0x07, 0x02};
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+void ViscaLib::ZOOM_WIDE_STANDARD(){
+  byte list[4] = {0x01, 0x04, 0x07, 0x03};
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+void ViscaLib::ZOOM_TELE_VARIABLE(byte speed){
+  speed = constrain(speed, 0, 7);
+  byte list[4] = {0x01, 0x04, 0x07, 0x00};
+  list[3] = 0x20 + speed;
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+void ViscaLib::ZOOM_WIDE_VARIABLE(byte speed){
+  speed = constrain(speed, 0, 7);
+  byte list[4] = {0x01, 0x04, 0x07, 0x00};
+  list[3] = 0x30 + speed;
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+void ViscaLib::ZOOM_STOP(){
+  byte list[4] = {0x01, 0x04, 0x07, 0x00};
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+void ViscaLib::ZOOM_DIRECT(unsigned int zoomPosition){
+  zoomPosition = constrain(zoomPosition, 0, 0x4000);
+  byte list[7] = {0x01, 0x04, 0x47, 0x00, 0x00, 0x00, 0x00};
+  list[3] = (zoomPosition & 0xF000) >> 12;
+  list[4] = (zoomPosition & 0x0F00) >> 8;
+  list[5] = (zoomPosition & 0x00F0) >> 4;
+  list[6] = (zoomPosition & 0x000F);
+
+  sendList(list, sizeof(list) / sizeof(list[0]));
+}
+
+unsigned int ViscaLib::QUERY_ZOOM(){
+  byte list[3] = {0x09, 0x04, 0x47};
+  unsigned long startTime = millis();
+  byte currentByte;
+  byte dataStream[4];
+  unsigned int val;
+  sendList(list, sizeof(list) / sizeof(list[0]));
+  while(!_serial.available()){
+    if(millis() - startTime > 1000){
+      return 0xffff;
+    }
+  }
+  while(currentByte != 0xff){
+    if(_serial.available()){
+      currentByte = _serial.read();
+      if(currentByte == 0xff){
+        val = dataStream[3] + 0x10 * dataStream[2] + 0x100 * dataStream[1] + 0x1000 * dataStream[0];
+        return val;
+      }else if (currentByte < 0x10){
+        for(int i = 0; i < 3; i++){
+          dataStream[i] = dataStream[i + 1];
+        }
+        dataStream[3] = currentByte;
+      }
+    }else if(millis() - startTime > 2000){
+      return 0xffff;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
