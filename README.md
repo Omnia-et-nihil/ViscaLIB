@@ -73,7 +73,7 @@ void loop() {
 | `ZOOM_WIDE_VARIABLE(s)` | `s = speed value 1 to 7` |
 | `ZOOM_STOP()` | `none` |
 | `ZOOM_DIRECT(z)` | `z = zoom position 0 to 16384` |
-| `ZOOM_QUERY()` | `none` |
+| `QUERY_ZOOM()` | `none` |
 
 ## Authors
 
