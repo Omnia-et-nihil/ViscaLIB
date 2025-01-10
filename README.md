@@ -16,6 +16,7 @@ It will send the following command to the chosen serial interface:
 ```
 
 ⚠️ **I only tested it on Sony Ipela SNC-RX550** ⚠️
+Also tested with PTZOptics Move SE.
 
 ## Installation
 
@@ -66,10 +67,18 @@ void loop() {
 | `PAN_TILT_SLOW_MODE(x)` | `x: True / False` |
 | `PAN_TILT_ABSOLUTE_POSITION(s, x, y)` | `s = speed value 1 to 18 ; x = Pan value -8160 to 8160 ; y = Tilt value -2040 to 2040` |
 | `PAN_TILT_RELATIVE_POSITION(s, x, y)` | `s = speed value 1 to 18 ; x = Pan value -8160 to 8160 ; y = Tilt value -2040 to 2040` |
+| `ZOOM_TELE_STANDARD()` | `none`|
+| `ZOOM_WIDE_STANDARD()` | `none` |
+| `ZOOM_TELE_VARIABLE(s)` | `s = speed value 1 to 7` |
+| `ZOOM_WIDE_VARIABLE(s)` | `s = speed value 1 to 7` |
+| `ZOOM_STOP()` | `none` |
+| `ZOOM_DIRECT(z)` | `z = zoom position 0 to 16384` |
+| `ZOOM_QUERY()` | `none` |
 
 ## Authors
 
 - [Unix5](https://unix5.net)
+- Omnia Et Nihil https://www.youtube.com/@omnia8838
 
 
 ## License
