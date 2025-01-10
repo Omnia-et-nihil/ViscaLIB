@@ -78,7 +78,7 @@ void loop() {
 ## Authors
 
 - [Unix5](https://unix5.net)
-- Omnia Et Nihil https://www.youtube.com/@omnia8838
+- [Omnia Et Nihil].(https://www.youtube.com/@omnia8838)
 
 
 ## License
