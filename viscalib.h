@@ -22,7 +22,14 @@ public:
   void PAN_TILT_SLOW_MODE(bool enable);
   void PAN_TILT_ABSOLUTE_POSITION(byte speed, int panPosition, int tiltPosition);
   void PAN_TILT_RELATIVE_POSITION(byte speed, int panPosition, int tiltPosition);
-
+  void ZOOM_TELE_STANDARD();
+  void ZOOM_WIDE_STANDARD();
+  void ZOOM_TELE_VARIABLE(byte speed);
+  void ZOOM_WIDE_VARIABLE(byte speed);
+  void ZOOM_STOP();
+  void ZOOM_DIRECT(unsigned int zoomPosition);
+  unsigned int QUERY_ZOOM();
+  
 private:
   Stream& _serial;
   void sendList(byte list[], size_t listsize);
