@@ -181,7 +181,76 @@ void ViscaLib::ZOOM_DIRECT(unsigned int zoomPosition){
   sendList(list, sizeof(list) / sizeof(list[0]));
 }
 
+int ViscaLib::QUERY_PAN_POSITION(){
+  while(_serial.available()){
+    _serial.read();
+  }
+  byte list[3] = {0x09, 0x06, 0x12};
+  unsigned long startTime = millis();
+  byte currentByte;
+  byte dataStream[10];
+  int val;
+  sendList(list, sizeof(list) / sizeof(list[0]));
+  while(!_serial.available()){
+    if(millis() - startTime > 1000){
+      return 0xffff;
+    }
+  }
+  while(currentByte != 0xff){
+    if(_serial.available()){
+      currentByte = _serial.read();
+      if(currentByte == 0xff){
+        val = dataStream[5] | (dataStream[4] << 4) | (dataStream[3] << 8) | (dataStream[2] << 12);
+        return val;
+      }else{
+        for(int i = 0; i < 9; i++){
+          dataStream[i] = dataStream[i + 1];
+        }
+        dataStream[9] = currentByte;
+      }
+    }else if(millis() - startTime > 2000){
+      return 0xffff;
+    }
+  }
+}
+
+int ViscaLib::QUERY_TILT_POSITION(){
+  while(_serial.available()){
+    _serial.read();
+  }
+  byte list[3] = {0x09, 0x06, 0x12};
+  unsigned long startTime = millis();
+  byte currentByte;
+  byte dataStream[10];
+  int val;
+  sendList(list, sizeof(list) / sizeof(list[0]));
+  while(!_serial.available()){
+    if(millis() - startTime > 1000){
+      return 0xffff;
+    }
+  }
+  while(currentByte != 0xff){
+    if(_serial.available()){
+      currentByte = _serial.read();
+      if(currentByte == 0xff){
+        val = dataStream[9] | (dataStream[8] << 4) | (dataStream[7] << 8) | (dataStream[6] << 12);
+        return val;
+      }else{
+        for(int i = 0; i < 9; i++){
+          dataStream[i] = dataStream[i + 1];
+        }
+        dataStream[9] = currentByte;
+      }
+    }else if(millis() - startTime > 2000){
+      return 0xffff;
+    }
+  }
+}
+
 unsigned int ViscaLib::QUERY_ZOOM(){
+  while(_serial.available()){
+    _serial.read();
+  }
   byte list[3] = {0x09, 0x04, 0x47};
   unsigned long startTime = millis();
   byte currentByte;
