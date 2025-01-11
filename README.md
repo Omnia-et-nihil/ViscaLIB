@@ -4,8 +4,11 @@
 ViscaLib is an Arduino library that allows you to control Visca-compatible PTZ cameras.
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 
+This is a fork of the library, originally created by Unix5. I(Omnia et Nihil), created this fork to add additional functions. I have only used this library with a PTZOptics Move SE camera. 
 
-## How it work ?
+This is not a complete VISCA library. It only covers some of the more commonly used functions. 
+
+## How does it work ?
 
 This library generates [Visca](https://en.wikipedia.org/wiki/VISCA_Protocol) commands from predefined functions. For example, if you call PAN_TILT_UP(5);
 
