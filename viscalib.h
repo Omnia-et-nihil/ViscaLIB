@@ -28,6 +28,8 @@ public:
   void ZOOM_WIDE_VARIABLE(byte speed);
   void ZOOM_STOP();
   void ZOOM_DIRECT(unsigned int zoomPosition);
+  int QUERY_PAN_POSITION();
+  int QUERY_TILT_POSITION();
   unsigned int QUERY_ZOOM();
   
 private:
